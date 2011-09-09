@@ -11,7 +11,12 @@
     = stylesheet_link_tag 'reset', 'application'
     :css
       #{render :partial => "issue_trackers/icons.css"}
-
+    :css
+      @media screen and (-webkit-min-device-pixel-ratio:0) {
+        table.backtrace ul.lines li {
+           border-bottom: 0px solid #2B2B2B;
+        }
+      }
     = yield :head
   %body{:id => controller.controller_name, :class => controller.action_name}
     #header
