@@ -7,7 +7,9 @@ $(function() {
     activateTabbedPanels();
     
     activateSelectableRows();
-    
+
+    obtainCurrentTab();
+
     $('#watcher_name').live("click", function() {
       $(this).closest('form').find('.show').removeClass('show');
       $('#app_watchers_attributes_0_user_id').addClass('show');
@@ -31,8 +33,23 @@ $(function() {
     $('input[type=submit][data-action]').click(function() {
       $(this).closest('form').attr('action', $(this).attr('data-action'));
     });
+
+    if ( $.query.get("tab") != "" ) {
+      $('.tab-bar a').each(function(){
+        if ( $(this).attr('rel') == $.query.get("tab") ) {
+          activateTab($(this));
+        }
+      });
+    }
   }
-  
+
+  function obtainCurrentTab() {
+    $('.notice-pagination a').click(function(){
+       $(this).attr('href', $.param.querystring($(this).attr('href'),
+                                          'tab=' + $('.tab-bar a.active').attr('rel')));
+    });
+  }
+
   function activateTabbedPanels() {
     $('.tab-bar a').each(function(){
       var tab = $(this);
